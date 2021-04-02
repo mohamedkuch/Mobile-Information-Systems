@@ -4,13 +4,46 @@ void main() {
   runApp(MyApp());
 }
 
+const MaterialColor white_color = MaterialColor(
+  0xFFecf0f1,
+  <int, Color>{
+    50: Color(0xFFecf0f1),
+    100: Color(0xFFecf0f1),
+    200: Color(0xFFecf0f1),
+    300: Color(0xFFecf0f1),
+    400: Color(0xFFecf0f1),
+    500: Color(0xFFecf0f1),
+    600: Color(0xFFecf0f1),
+    700: Color(0xFFecf0f1),
+    800: Color(0xFFecf0f1),
+    900: Color(0xFFecf0f1),
+  },
+);
+
+const MaterialColor primary_Color = MaterialColor(
+  0xFFF43D2A,
+  <int, Color>{
+    50: Color(0xFFF87F73),
+    100: Color(0xFFF43D2A),
+    200: Color(0xFFF43D2A),
+    300: Color(0xFFF43D2A),
+    400: Color(0xFFF43D2A),
+    500: Color(0xFFF43D2A),
+    600: Color(0xFFF43D2A),
+    700: Color(0xFFF43D2A),
+    800: Color(0xFFF43D2A),
+    900: Color(0xFFC71C0A),
+  },
+);
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.white,
+        accentColor: primary_Color,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -27,19 +60,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title:
+            Transform.scale(child: Image.asset('assets/logo.png'), scale: 0.6),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -48,18 +75,35 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // bottomNavigationBar: Container(
+      //   decoration: BoxDecoration(
+      //     boxShadow: <BoxShadow>[
+      //       BoxShadow(
+      //         color: Colors.black38,
+      //         blurRadius: 3,
+      //       ),
+      //     ],
+      //   ),
+      //   child: BottomNavigationBar(
+      //     elevation: 2,
+      //     currentIndex: 0,
+      //     selectedItemColor: primary_Color[800],
+      //     backgroundColor: Colors.white,
+      //     items: [
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.home),
+      //         label: 'Home',
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.person),
+      //         label: 'Profile',
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
