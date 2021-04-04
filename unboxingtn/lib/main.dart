@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:unboxingtn/search-bar.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 const MaterialColor white_color = MaterialColor(
-  0xFFecf0f1,
+  0xFFe1e1e1,
   <int, Color>{
-    50: Color(0xFFecf0f1),
-    100: Color(0xFFecf0f1),
-    200: Color(0xFFecf0f1),
-    300: Color(0xFFecf0f1),
-    400: Color(0xFFecf0f1),
-    500: Color(0xFFecf0f1),
-    600: Color(0xFFecf0f1),
-    700: Color(0xFFecf0f1),
-    800: Color(0xFFecf0f1),
-    900: Color(0xFFecf0f1),
+    50: Color(0xFFe1e1e1),
+    100: Color(0xFFe1e1e1),
+    200: Color(0xFFe1e1e1),
+    300: Color(0xFFe1e1e1),
+    400: Color(0xFFe1e1e1),
+    500: Color(0xFFe1e1e1),
+    600: Color(0xFFe1e1e1),
+    700: Color(0xFFe1e1e1),
+    800: Color(0xFFe1e1e1),
+    900: Color(0xFFe1e1e1),
   },
 );
 
@@ -59,6 +60,22 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+Widget bodyContent = ListView(
+  children: <Widget>[
+    SafeArea(
+      child: Divider(
+        height: 5,
+        thickness: 2,
+        indent: 15,
+        endIndent: 15,
+      ),
+    ),
+    SafeArea(
+      child: SearchBar(),
+    ),
+  ],
+);
+
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -68,42 +85,33 @@ class _MyHomePageState extends State<MyHomePage> {
             Transform.scale(child: Image.asset('assets/logo.png'), scale: 0.6),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+      body: bodyContent,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.black38,
+              blurRadius: 3,
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          elevation: 2,
+          currentIndex: 0,
+          selectedItemColor: primary_Color[800],
+          backgroundColor: Colors.white,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Settings',
             ),
           ],
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   decoration: BoxDecoration(
-      //     boxShadow: <BoxShadow>[
-      //       BoxShadow(
-      //         color: Colors.black38,
-      //         blurRadius: 3,
-      //       ),
-      //     ],
-      //   ),
-      //   child: BottomNavigationBar(
-      //     elevation: 2,
-      //     currentIndex: 0,
-      //     selectedItemColor: primary_Color[800],
-      //     backgroundColor: Colors.white,
-      //     items: [
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.home),
-      //         label: 'Home',
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.person),
-      //         label: 'Profile',
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
