@@ -45,8 +45,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
             height: 8.0,
             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
               color: _current == index
-                  ? Color.fromRGBO(0, 0, 0, 0.9)
+                  ? Theme.of(context).accentColor
                   : Color.fromRGBO(0, 0, 0, 0.4),
             ),
           );
