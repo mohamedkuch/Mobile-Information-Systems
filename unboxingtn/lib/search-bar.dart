@@ -6,15 +6,10 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: 15.0,
-        right: 15,
-        top: 20,
-        bottom: 15,
-      ),
+      padding: EdgeInsets.all(15),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.08),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
         ),
         child: TextField(

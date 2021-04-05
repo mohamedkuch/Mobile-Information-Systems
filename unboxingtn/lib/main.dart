@@ -85,13 +85,16 @@ class _MyHomePageState extends State<MyHomePage> {
             Transform.scale(child: Image.asset('assets/logo.png'), scale: 0.6),
         centerTitle: true,
       ),
-      body: bodyContent,
+      body: Container(
+        color: white_color,
+        child: bodyContent,
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           boxShadow: <BoxShadow>[
             BoxShadow(
-              color: Colors.black38,
-              blurRadius: 3,
+              color: Colors.black26,
+              blurRadius: 2,
             ),
           ],
         ),
