@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unboxingtn/carousel/carousel-top.dart';
 import 'package:unboxingtn/top/search-bar.dart';
 
 void main() {
@@ -73,6 +74,9 @@ Widget bodyContent = ListView(
     SafeArea(
       child: SearchBar(),
     ),
+    SafeArea(
+      child: CarouselWithIndicatorDemo(),
+    )
   ],
 );
 
