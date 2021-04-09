@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unboxingtn/carousel/carousel-top.dart';
 import 'package:unboxingtn/top/search-bar.dart';
+import 'package:unboxingtn/wp-data.dart';
 
 void main() {
   runApp(MyApp());
@@ -61,24 +62,33 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-Widget bodyContent = ListView(
-  children: <Widget>[
-    SafeArea(
-      child: Divider(
+Widget bodyContent(snapshot) {
+  return ListView(
+    children: <Widget>[
+      Divider(
         height: 5,
         thickness: 2,
         indent: 15,
         endIndent: 15,
       ),
-    ),
-    SafeArea(
-      child: SearchBar(),
-    ),
-    SafeArea(
-      child: CarouselWithIndicatorDemo(),
-    )
-  ],
-);
+      SearchBar(),
+      CarouselWithIndicatorDemo(),
+      ListView.builder(
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemCount: snapshot.data.length,
+        itemBuilder: (ctx, int index) {
+          return Container(
+            child: Text(
+              snapshot.data[index]["title"]["rendered"],
+              textDirection: TextDirection.rtl,
+            ),
+          );
+        },
+      ),
+    ],
+  );
+}
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
@@ -89,10 +99,19 @@ class _MyHomePageState extends State<MyHomePage> {
             Transform.scale(child: Image.asset('assets/logo.png'), scale: 0.6),
         centerTitle: true,
       ),
-      body: Container(
-        color: white_color,
-        child: bodyContent,
-      ),
+      body: FutureBuilder(
+          future: fetchWpPosts(),
+          builder: (ctx, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Container(
+              color: white_color,
+              child: bodyContent(snapshot),
+            );
+          }),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           boxShadow: <BoxShadow>[
