@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unboxingtn/carousel/carousel-top.dart';
 import 'package:unboxingtn/top/search-bar.dart';
+import 'package:unboxingtn/top/top-bar.dart';
 import 'package:unboxingtn/wp-data.dart';
 
 void main() {
@@ -65,6 +66,7 @@ class MyHomePage extends StatefulWidget {
 Widget bodyContent(snapshot) {
   return ListView(
     children: <Widget>[
+      TopBar(snapshot),
       Divider(
         height: 5,
         thickness: 2,
@@ -72,7 +74,7 @@ Widget bodyContent(snapshot) {
         endIndent: 15,
       ),
       SearchBar(),
-      CarouselWithIndicatorDemo(),
+      CarouselWithIndicatorDemo(snapshot),
       ListView.builder(
         shrinkWrap: true,
         physics: ScrollPhysics(),
