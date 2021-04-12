@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unboxingtn/carousel/carousel-top.dart';
+import 'package:unboxingtn/main/main-card.dart';
 import 'package:unboxingtn/top/search-bar.dart';
 import 'package:unboxingtn/top/top-bar.dart';
 import 'package:unboxingtn/wp-data.dart';
@@ -64,31 +65,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 Widget bodyContent(snapshot) {
-  return ListView(
-    children: <Widget>[
-      TopBar(snapshot),
-      Divider(
-        height: 5,
-        thickness: 2,
-        indent: 15,
-        endIndent: 15,
-      ),
-      SearchBar(),
-      CarouselWithIndicatorDemo(snapshot),
-      ListView.builder(
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
-        itemCount: snapshot.data.length,
-        itemBuilder: (ctx, int index) {
-          return Container(
-            child: Text(
-              snapshot.data[index]["title"]["rendered"],
-              textDirection: TextDirection.rtl,
-            ),
-          );
-        },
-      ),
-    ],
+  return SafeArea(
+    child: ListView(
+      children: <Widget>[
+        TopBar(snapshot),
+        Divider(
+          height: 5,
+          thickness: 2,
+          indent: 15,
+          endIndent: 15,
+        ),
+        SearchBar(),
+        CarouselWithIndicatorDemo(snapshot),
+        MainCard(snapshot),
+      ],
+    ),
   );
 }
 

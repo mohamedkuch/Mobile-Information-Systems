@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -82,12 +83,6 @@ List<Widget> imageSliders(snapshot) {
                         height: 300.0,
                         width: 1000,
                       ),
-                      // Image.network(
-
-                      //   fit: BoxFit.cover,
-                      //   height: 300.0,
-                      //   width: 1000,
-                      // ),
                       Positioned(
                         bottom: 0.0,
                         left: 0.0,
@@ -96,7 +91,7 @@ List<Widget> imageSliders(snapshot) {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Color.fromARGB(200, 0, 0, 0),
+                                Color.fromARGB(400, 0, 0, 0),
                                 Color.fromARGB(0, 0, 0, 0)
                               ],
                               begin: Alignment.bottomCenter,
@@ -109,10 +104,10 @@ List<Widget> imageSliders(snapshot) {
                             snapshot.data[imgList.indexOf(item)]["title"]
                                 ["rendered"],
                             textDirection: TextDirection.rtl,
-                            style: TextStyle(
+                            style: GoogleFonts.markaziText(
+                              fontWeight: FontWeight.w600,
                               color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
                             ),
                           ),
                         ),
