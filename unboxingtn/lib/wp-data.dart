@@ -1,10 +1,11 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-Future fetchWpPosts() async {
+Future fetchWpPosts(pageNumber) async {
   var queryParameters = {
     'per_page': '5',
     '_embed': 'true',
+    'page': pageNumber.toString(),
   };
 
   final res = await http.get(
