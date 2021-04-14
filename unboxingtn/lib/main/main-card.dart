@@ -9,7 +9,7 @@ class MainCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 15),
+      padding: EdgeInsets.only(bottom: 5),
       child: ListView.builder(
         shrinkWrap: true,
         physics: ScrollPhysics(),

@@ -49,6 +49,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
         accentColor: primary_Color,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: primary_Color,
+          ),
+        ),
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -64,26 +69,15 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-Widget bodyContent(snapshot) {
-  return SafeArea(
-    child: ListView(
-      children: <Widget>[
-        TopBar(snapshot),
-        Divider(
-          height: 5,
-          thickness: 2,
-          indent: 15,
-          endIndent: 15,
-        ),
-        SearchBar(),
-        CarouselWithIndicatorDemo(snapshot),
-        MainCard(snapshot),
-      ],
-    ),
-  );
-}
-
 class _MyHomePageState extends State<MyHomePage> {
+  int _Loading = 0;
+
+  void _LoadMore() {
+    setState(() {
+      _Loading += 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,18 +87,56 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-          future: fetchWpPosts(),
-          builder: (ctx, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return Container(
-              color: white_color,
-              child: bodyContent(snapshot),
+        future: fetchWpPosts(),
+        builder: (ctx, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
             );
-          }),
+          }
+          return Container(
+            color: white_color,
+            child: SafeArea(
+              child: ListView(
+                children: <Widget>[
+                  TopBar(snapshot),
+                  Divider(
+                    height: 5,
+                    thickness: 2,
+                    indent: 15,
+                    endIndent: 15,
+                  ),
+                  SearchBar(),
+                  CarouselWithIndicatorDemo(snapshot),
+                  MainCard(snapshot),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 15,
+                      right: 15,
+                      bottom: 10,
+                    ),
+                    child: ElevatedButton.icon(
+                      label: Text(
+                        'Load More',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      icon: Icon(Icons.add_circle_outline_rounded),
+                      onPressed: () {
+                        _LoadMore();
+                        print('Pressed');
+                        print(_Loading);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           boxShadow: <BoxShadow>[
