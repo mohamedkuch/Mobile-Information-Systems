@@ -4,6 +4,8 @@ import 'package:unboxingtn/main/main-card.dart';
 import 'package:unboxingtn/top/search-bar.dart';
 import 'package:unboxingtn/top/top-bar.dart';
 import 'package:unboxingtn/wp-data.dart';
+import 'package:unboxingtn/services.dart';
+import 'package:unboxingtn/Posts.dart';
 
 void main() {
   runApp(MyApp());
@@ -99,11 +101,18 @@ Widget bottomNavigation() {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _Loading = 1;
+  List<Post> _posts;
+  bool _isLoading;
 
-  void _LoadMore() {
-    setState(() {
-      _Loading += 1;
+  @override
+  void initState() {
+    super.initState();
+    _isLoading = true;
+    Services.getPosts().then((posts) {
+      setState(() {
+        _posts = posts;
+        _isLoading = false;
+      });
     });
   }
 
@@ -115,57 +124,76 @@ class _MyHomePageState extends State<MyHomePage> {
             Transform.scale(child: Image.asset('assets/logo.png'), scale: 0.6),
         centerTitle: true,
       ),
-      body: FutureBuilder(
-        future: fetchWpPosts(1),
-        builder: (ctx, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
+
+      body: Container(
+        color: white_color,
+        child: ListView.builder(
+          itemCount: null == _posts ? 0 : _posts.length,
+          itemBuilder: (context, int index) {
+            print("#######");
+
+            print(_posts.length);
+
+            Post post = _posts[index];
+
+            return ListTile(
+              title: Text(post.title.rendered),
             );
-          }
-          return Container(
-            color: white_color,
-            child: SafeArea(
-              child: ListView(
-                children: <Widget>[
-                  TopBar(snapshot),
-                  Divider(
-                    height: 5,
-                    thickness: 2,
-                    indent: 15,
-                    endIndent: 15,
-                  ),
-                  SearchBar(),
-                  CarouselWithIndicatorDemo(snapshot),
-                  MainCard(snapshot),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 15,
-                      right: 15,
-                      bottom: 10,
-                    ),
-                    child: ElevatedButton.icon(
-                      label: Text(
-                        'Load More',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      icon: Icon(Icons.add_circle_outline_rounded),
-                      onPressed: () {
-                        _LoadMore();
-                        print('Pressed');
-                        print(_Loading);
-                      },
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
-        },
+          },
+        ),
       ),
+      // body: FutureBuilder(
+      //   future: fetchWpPosts(1),
+      //   builder: (ctx, snapshot) {
+      //     if (!snapshot.hasData) {
+      //       return Center(
+      //         child: CircularProgressIndicator(),
+      //       );
+      //     }
+      //     return Container(
+      //       color: white_color,
+      //       child: SafeArea(
+      //         child: ListView(
+      //           children: <Widget>[
+      //             TopBar(snapshot),
+      //             Divider(
+      //               height: 5,
+      //               thickness: 2,
+      //               indent: 15,
+      //               endIndent: 15,
+      //             ),
+      //             SearchBar(),
+      //             CarouselWithIndicatorDemo(snapshot),
+      //             MainCard(snapshot),
+      //             Padding(
+      //               padding: EdgeInsets.only(
+      //                 left: 15,
+      //                 right: 15,
+      //                 bottom: 10,
+      //               ),
+      //               child: ElevatedButton.icon(
+      //                 label: Text(
+      //                   'Load More',
+      //                   style: TextStyle(
+      //                     color: Colors.white,
+      //                     fontWeight: FontWeight.w600,
+      //                   ),
+      //                 ),
+      //                 icon: Icon(Icons.add_circle_outline_rounded),
+      //                 onPressed: () {
+      //                   _LoadMore();
+      //                   print('Pressed');
+      //                   print(_Loading);
+      //                 },
+      //               ),
+      //             )
+      //           ],
+      //         ),
+      //       ),
+      //     );
+      //   },
+      // ),
+
       bottomNavigationBar: bottomNavigation(),
     );
   }
