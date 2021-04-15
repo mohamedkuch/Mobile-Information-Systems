@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:unboxingtn/Posts.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -11,8 +11,8 @@ final List<String> imgList = [
 ];
 
 class CarouselWithIndicatorDemo extends StatefulWidget {
-  final snapshot;
-  CarouselWithIndicatorDemo(this.snapshot);
+  final List<Post> posts;
+  CarouselWithIndicatorDemo(this.posts);
 
   @override
   State<StatefulWidget> createState() {
@@ -27,7 +27,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   Widget build(BuildContext context) {
     return Column(children: [
       CarouselSlider(
-        items: imageSliders(widget.snapshot),
+        items: imageSliders(widget.posts),
         options: CarouselOptions(
             autoPlay: true,
             initialPage: 0,
@@ -61,7 +61,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   }
 }
 
-List<Widget> imageSliders(snapshot) {
+List<Widget> imageSliders(posts) {
   return imgList
       .map((item) => Container(
             child: Container(
@@ -75,8 +75,10 @@ List<Widget> imageSliders(snapshot) {
                     children: <Widget>[
                       FadeInImage(
                         image: NetworkImage(
-                          snapshot.data[imgList.indexOf(item)]["_embedded"]
-                              ['wp:featuredmedia'][0]['source_url'],
+                          posts[imgList.indexOf(item)]
+                              .embedded
+                              .wpFeaturedmedia[0]
+                              .sourceUrl,
                         ),
                         placeholder: AssetImage('assets/img_placeholder.png'),
                         fit: BoxFit.cover,
@@ -101,8 +103,7 @@ List<Widget> imageSliders(snapshot) {
                           padding: EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 20.0),
                           child: Text(
-                            snapshot.data[imgList.indexOf(item)]["title"]
-                                ["rendered"],
+                            posts[imgList.indexOf(item)].title.rendered,
                             textDirection: TextDirection.rtl,
                             style: TextStyle(
                               fontFamily: 'MarkaziText',

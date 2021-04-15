@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:unboxingtn/Posts.dart';
 
 class TopBar extends StatelessWidget {
-  final snapshot;
-  TopBar(this.snapshot);
+  final List<Post> posts;
+  TopBar(this.posts);
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +18,11 @@ class TopBar extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: TyperAnimatedTextKit(
               text: [
-                snapshot.data[0]["title"]["rendered"],
-                snapshot.data[1]["title"]["rendered"],
-                snapshot.data[2]["title"]["rendered"],
-                snapshot.data[3]["title"]["rendered"],
-                snapshot.data[4]["title"]["rendered"],
+                posts[0].title.rendered,
+                posts[1].title.rendered,
+                posts[2].title.rendered,
+                posts[3].title.rendered,
+                posts[4].title.rendered,
               ],
               textStyle: TextStyle(fontSize: 13),
               speed: Duration(milliseconds: 80),

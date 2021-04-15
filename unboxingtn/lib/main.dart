@@ -125,23 +125,39 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
 
-      body: Container(
-        color: white_color,
-        child: ListView.builder(
-          itemCount: null == _posts ? 0 : _posts.length,
-          itemBuilder: (context, int index) {
-            print("#######");
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Container(
+              color: white_color,
+              child: SafeArea(
+                child: ListView(children: <Widget>[
+                  TopBar(_posts),
+                  Divider(
+                    height: 5,
+                    thickness: 2,
+                    indent: 15,
+                    endIndent: 15,
+                  ),
+                  SearchBar(),
+                  CarouselWithIndicatorDemo(_posts.sublist(0, 5)),
+                  // Container(
+                  //   color: white_color,
+                  //   child: ListView.builder(
+                  //     itemCount: _posts.length,
+                  //     itemBuilder: (context, int index) {
+                  //       print("#######");
+                  //       Post post = _posts[index];
 
-            print(_posts.length);
+                  //       return Text("aaaa");
+                  //     },
+                  //   ),
+                  // ),
+                ]),
+              ),
+            ),
 
-            Post post = _posts[index];
-
-            return ListTile(
-              title: Text(post.title.rendered),
-            );
-          },
-        ),
-      ),
       // body: FutureBuilder(
       //   future: fetchWpPosts(1),
       //   builder: (ctx, snapshot) {
