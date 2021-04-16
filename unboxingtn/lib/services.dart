@@ -2,11 +2,11 @@ import 'Posts.dart';
 import 'package:http/http.dart' as http;
 
 class Services {
-  static Future<List<Post>> getPosts() async {
+  static Future<List<Post>> getPosts(pageNumber) async {
     var queryParameters = {
       'per_page': '5',
       '_embed': 'true',
-      'page': '1',
+      'page': pageNumber.toString(),
     };
     try {
       final res = await http.get(
@@ -16,8 +16,12 @@ class Services {
 
       if (res.statusCode == 200) {
         final List<Post> posts = postFromJson(res.body);
-
-        print(posts);
+        for (var item in res.headers.entries) {
+          if (item.key == 'x-wp-totalpages') {
+            print(item.value);
+          }
+          //print(item.value);
+        }
 
         return posts;
       } else {

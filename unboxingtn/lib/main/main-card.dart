@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
 import 'package:html/dom.dart' as htmlParser;
+import 'package:unboxingtn/Posts.dart';
 
 class MainCard extends StatelessWidget {
-  final snapshot;
-  MainCard(this.snapshot);
+  final List<Post> posts;
+  MainCard(this.posts);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class MainCard extends StatelessWidget {
       child: ListView.builder(
         shrinkWrap: true,
         physics: ScrollPhysics(),
-        itemCount: snapshot.data.length,
+        itemCount: posts.length,
         itemBuilder: (ctx, int index) {
           return Padding(
             padding: EdgeInsets.only(left: 15, right: 15, top: 5),
@@ -38,10 +38,10 @@ class MainCard extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.38,
                             height: 100,
                             fit: BoxFit.cover,
-                            image: NetworkImage(
-                              snapshot.data[index]["_embedded"]
-                                  ['wp:featuredmedia'][0]['source_url'],
-                            ),
+                            image: NetworkImage(posts[index]
+                                .embedded
+                                .wpFeaturedmedia[0]
+                                .sourceUrl),
                           ),
                         ),
                         Expanded(
@@ -59,7 +59,7 @@ class MainCard extends StatelessWidget {
                                     top: 3,
                                   ),
                                   child: Text(
-                                    snapshot.data[index]["title"]["rendered"],
+                                    posts[index].title.rendered,
                                     style: TextStyle(
                                       fontFamily: 'MarkaziText',
                                       fontWeight: FontWeight.bold,
@@ -78,8 +78,8 @@ class MainCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  htmlParser.DocumentFragment.html(snapshot
-                                          .data[index]["excerpt"]["rendered"])
+                                  htmlParser.DocumentFragment.html(
+                                          posts[index].excerpt.rendered)
                                       .text,
                                   // snapshot.data[index]["excerpt"]["rendered"],
                                   overflow: TextOverflow.ellipsis,

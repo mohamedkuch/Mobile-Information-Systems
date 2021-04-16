@@ -3,7 +3,6 @@ import 'package:unboxingtn/carousel/carousel-top.dart';
 import 'package:unboxingtn/main/main-card.dart';
 import 'package:unboxingtn/top/search-bar.dart';
 import 'package:unboxingtn/top/top-bar.dart';
-import 'package:unboxingtn/wp-data.dart';
 import 'package:unboxingtn/services.dart';
 import 'package:unboxingtn/Posts.dart';
 
@@ -103,15 +102,31 @@ Widget bottomNavigation() {
 class _MyHomePageState extends State<MyHomePage> {
   List<Post> _posts;
   bool _isLoading;
+  bool _isMoreLoading = false;
 
   @override
   void initState() {
     super.initState();
     _isLoading = true;
-    Services.getPosts().then((posts) {
+    Services.getPosts(1).then((posts) {
       setState(() {
         _posts = posts;
         _isLoading = false;
+        print(_posts.length);
+      });
+    });
+  }
+
+  void requestMorePost() {
+    setState(() {
+      _isMoreLoading = true;
+    });
+
+    Services.getPosts(2).then((posts) {
+      setState(() {
+        _posts += posts;
+        _isMoreLoading = false;
+        print(_posts.length);
       });
     });
   }
@@ -124,7 +139,6 @@ class _MyHomePageState extends State<MyHomePage> {
             Transform.scale(child: Image.asset('assets/logo.png'), scale: 0.6),
         centerTitle: true,
       ),
-
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -132,84 +146,54 @@ class _MyHomePageState extends State<MyHomePage> {
           : Container(
               color: white_color,
               child: SafeArea(
-                child: ListView(children: <Widget>[
-                  TopBar(_posts),
-                  Divider(
-                    height: 5,
-                    thickness: 2,
-                    indent: 15,
-                    endIndent: 15,
-                  ),
-                  SearchBar(),
-                  CarouselWithIndicatorDemo(_posts.sublist(0, 5)),
-                  // Container(
-                  //   color: white_color,
-                  //   child: ListView.builder(
-                  //     itemCount: _posts.length,
-                  //     itemBuilder: (context, int index) {
-                  //       print("#######");
-                  //       Post post = _posts[index];
-
-                  //       return Text("aaaa");
-                  //     },
-                  //   ),
-                  // ),
-                ]),
+                child: ListView(
+                  children: <Widget>[
+                    TopBar(_posts.sublist(0, 5)),
+                    Divider(
+                      height: 5,
+                      thickness: 2,
+                      indent: 15,
+                      endIndent: 15,
+                    ),
+                    SearchBar(),
+                    CarouselWithIndicatorDemo(_posts.sublist(0, 5)),
+                    MainCard(_posts),
+                    _isMoreLoading
+                        ? Padding(
+                            padding: EdgeInsets.only(top: 10, bottom: 20),
+                            child: Center(
+                              child: Container(
+                                height: 25,
+                                width: 25,
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          )
+                        : Padding(
+                            padding: EdgeInsets.only(
+                              left: 15,
+                              right: 15,
+                              bottom: 10,
+                            ),
+                            child: ElevatedButton.icon(
+                              label: Text(
+                                'Load More',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              icon: Icon(Icons.add_circle_outline_rounded),
+                              onPressed: () {
+                                print('Pressed');
+                                requestMorePost();
+                              },
+                            ),
+                          )
+                  ],
+                ),
               ),
             ),
-
-      // body: FutureBuilder(
-      //   future: fetchWpPosts(1),
-      //   builder: (ctx, snapshot) {
-      //     if (!snapshot.hasData) {
-      //       return Center(
-      //         child: CircularProgressIndicator(),
-      //       );
-      //     }
-      //     return Container(
-      //       color: white_color,
-      //       child: SafeArea(
-      //         child: ListView(
-      //           children: <Widget>[
-      //             TopBar(snapshot),
-      //             Divider(
-      //               height: 5,
-      //               thickness: 2,
-      //               indent: 15,
-      //               endIndent: 15,
-      //             ),
-      //             SearchBar(),
-      //             CarouselWithIndicatorDemo(snapshot),
-      //             MainCard(snapshot),
-      //             Padding(
-      //               padding: EdgeInsets.only(
-      //                 left: 15,
-      //                 right: 15,
-      //                 bottom: 10,
-      //               ),
-      //               child: ElevatedButton.icon(
-      //                 label: Text(
-      //                   'Load More',
-      //                   style: TextStyle(
-      //                     color: Colors.white,
-      //                     fontWeight: FontWeight.w600,
-      //                   ),
-      //                 ),
-      //                 icon: Icon(Icons.add_circle_outline_rounded),
-      //                 onPressed: () {
-      //                   _LoadMore();
-      //                   print('Pressed');
-      //                   print(_Loading);
-      //                 },
-      //               ),
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //     );
-      //   },
-      // ),
-
       bottomNavigationBar: bottomNavigation(),
     );
   }
