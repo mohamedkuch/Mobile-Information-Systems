@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:unboxingtn/Posts.dart';
+import 'package:unboxingtn/single-post.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -27,7 +28,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   Widget build(BuildContext context) {
     return Column(children: [
       CarouselSlider(
-        items: imageSliders(widget.posts),
+        items: imageSliders(widget.posts, context),
         options: CarouselOptions(
             autoPlay: true,
             initialPage: 0,
@@ -61,9 +62,21 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   }
 }
 
-List<Widget> imageSliders(posts) {
+List<Widget> imageSliders(posts, context) {
   return imgList
-      .map((item) => Container(
+      .map(
+        (item) => GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SinglePost(posts[imgList.indexOf(item)]),
+              ),
+            );
+
+            print("carousel tapped");
+          },
+          child: Container(
             child: Container(
               margin: EdgeInsets.only(
                 bottom: 10,
@@ -117,6 +130,8 @@ List<Widget> imageSliders(posts) {
                     ],
                   )),
             ),
-          ))
+          ),
+        ),
+      )
       .toList();
 }

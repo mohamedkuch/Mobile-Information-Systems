@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as htmlParser;
 import 'package:unboxingtn/Posts.dart';
+import 'package:unboxingtn/single-post.dart';
 
 class MainCard extends StatelessWidget {
   final List<Post> posts;
@@ -22,6 +23,11 @@ class MainCard extends StatelessWidget {
                 splashColor: Color.fromRGBO(195, 48, 33, 0.2),
                 onTap: () {
                   print('Card tapped.');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SinglePost(posts[index])),
+                  );
                 },
                 child: Padding(
                   padding: EdgeInsets.all(10),
@@ -98,58 +104,6 @@ class MainCard extends StatelessWidget {
                       ],
                     ),
                   ),
-
-                  // child: Column(
-                  //   mainAxisSize: MainAxisSize.min,
-                  //   children: <Widget>[
-                  //     Directionality(
-                  //       textDirection: TextDirection.rtl,
-                  //       child: ListTile(
-                  //         leading: ClipRRect(
-                  //           borderRadius: BorderRadius.circular(5.0),
-                  //           child: Image.network(
-                  //             snapshot.data[index]["_embedded"]
-                  //                 ['wp:featuredmedia'][0]['source_url'],
-                  //             width: 100,
-                  //             height: 300,
-                  //           ),
-                  //         ),
-                  //         title: Text(
-                  //           snapshot.data[index]["title"]["rendered"],
-                  //           style: GoogleFonts.markaziText(
-                  //             fontSize: 16,
-                  //           ),
-                  //         ),
-                  //         subtitle: Text(
-                  //           htmlParser.DocumentFragment.html(
-                  //                   snapshot.data[index]["excerpt"]["rendered"])
-                  //               .text,
-                  //           overflow: TextOverflow.ellipsis,
-                  //           maxLines: 3,
-                  //           style: GoogleFonts.markaziText(
-                  //             fontSize: 12,
-                  //           ),
-                  //         ),
-                  //         isThreeLine: true,
-                  //       ),
-                  //     ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.end,
-                  //   children: <Widget>[
-                  //     TextButton(
-                  //       child: const Text('BUY TICKETS'),
-                  //       onPressed: () {/* ... */},
-                  //     ),
-                  //     const SizedBox(width: 8),
-                  //     TextButton(
-                  //       child: const Text('LISTEN'),
-                  //       onPressed: () {/* ... */},
-                  //     ),
-                  //     const SizedBox(width: 8),
-                  //   ],
-                  // ),
-                  // ],
-                  // ),
                 ),
               ),
             ),
