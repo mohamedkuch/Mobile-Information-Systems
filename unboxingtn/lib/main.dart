@@ -103,16 +103,18 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Post> _posts;
   bool _isLoading;
   bool _isMoreLoading = false;
+  int _currentPage = 1;
+  int _pageCount = 0;
 
   @override
   void initState() {
     super.initState();
     _isLoading = true;
-    Services.getPosts(1).then((posts) {
+    Services.getPosts(_currentPage).then((data) {
       setState(() {
-        _posts = posts;
+        _posts = data['posts'];
+        _pageCount = data['count'];
         _isLoading = false;
-        print(_posts.length);
       });
     });
   }
@@ -120,15 +122,63 @@ class _MyHomePageState extends State<MyHomePage> {
   void requestMorePost() {
     setState(() {
       _isMoreLoading = true;
+      _currentPage += 1;
+      print(_currentPage);
     });
 
-    Services.getPosts(2).then((posts) {
+    Services.getPosts(_currentPage).then((data) {
       setState(() {
-        _posts += posts;
+        _posts += data['posts'];
         _isMoreLoading = false;
         print(_posts.length);
+        print(_pageCount);
       });
     });
+  }
+
+  Widget loadMoreButton() {
+    if (_currentPage > _pageCount && !_isMoreLoading) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: 10,
+        ),
+        child: Center(
+          child: Text("No more articles left"),
+        ),
+      );
+    }
+    return _isMoreLoading
+        ? Padding(
+            padding: EdgeInsets.only(top: 10, bottom: 20),
+            child: Center(
+              child: Container(
+                height: 25,
+                width: 25,
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          )
+        : Padding(
+            padding: EdgeInsets.only(
+              left: 15,
+              right: 15,
+              bottom: 10,
+            ),
+            child: ElevatedButton.icon(
+              label: Text(
+                'Load More',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              icon: Icon(Icons.add_circle_outline_rounded),
+              onPressed: () {
+                print('Pressed');
+                requestMorePost();
+              },
+            ),
+          );
   }
 
   @override
@@ -158,38 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     SearchBar(),
                     CarouselWithIndicatorDemo(_posts.sublist(0, 5)),
                     MainCard(_posts),
-                    _isMoreLoading
-                        ? Padding(
-                            padding: EdgeInsets.only(top: 10, bottom: 20),
-                            child: Center(
-                              child: Container(
-                                height: 25,
-                                width: 25,
-                                child: CircularProgressIndicator(),
-                              ),
-                            ),
-                          )
-                        : Padding(
-                            padding: EdgeInsets.only(
-                              left: 15,
-                              right: 15,
-                              bottom: 10,
-                            ),
-                            child: ElevatedButton.icon(
-                              label: Text(
-                                'Load More',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              icon: Icon(Icons.add_circle_outline_rounded),
-                              onPressed: () {
-                                print('Pressed');
-                                requestMorePost();
-                              },
-                            ),
-                          )
+                    loadMoreButton(),
                   ],
                 ),
               ),
