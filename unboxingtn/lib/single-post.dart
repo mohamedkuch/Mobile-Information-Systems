@@ -40,6 +40,25 @@ Widget bottomNavigation() {
   );
 }
 
+// title section
+Widget titleSection(Post post) {
+  return Container(
+    padding: const EdgeInsets.all(20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          post.title.rendered,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text("aaa")
+      ],
+    ),
+  );
+}
+
 class _SinglePostState extends State<SinglePost> {
   @override
   Widget build(BuildContext context) {
@@ -53,13 +72,20 @@ class _SinglePostState extends State<SinglePost> {
         color: white_color,
         child: SafeArea(
           child: ListView(children: <Widget>[
-            Text(widget.post.title.rendered),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Go back!'),
+            FadeInImage(
+              placeholder: AssetImage('assets/img_placeholder.jpg'),
+              width: MediaQuery.of(context).size.width * 0.38,
+              height: 240,
+              fit: BoxFit.cover,
+              image: NetworkImage(
+                  widget.post.embedded.wpFeaturedmedia[0].sourceUrl),
             ),
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: titleSection(widget.post),
+            ),
+            // buttonSection,
+            // textSection,
           ]),
         ),
 
