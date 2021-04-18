@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unboxingtn/Posts.dart';
 import 'package:unboxingtn/single-post.dart';
+import 'package:unboxingtn/transition/PageRouteTransition.dart';
 
 class MainCard extends StatelessWidget {
   final List<Post> posts;
@@ -22,11 +23,8 @@ class MainCard extends StatelessWidget {
                 splashColor: Color.fromRGBO(195, 48, 33, 0.2),
                 onTap: () {
                   print('Card tapped.');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SinglePost(posts[index])),
-                  );
+                  Navigator.push(context,
+                      PageRouteTransition(widget: SinglePost(posts[index])));
                 },
                 child: Padding(
                   padding: EdgeInsets.all(10),

@@ -93,7 +93,6 @@ Widget titleSection(Post post) {
 class _SinglePostState extends State<SinglePost> {
   @override
   Widget build(BuildContext context) {
-    print(widget.post.content.rendered);
     return Scaffold(
       appBar: AppBar(
         title:

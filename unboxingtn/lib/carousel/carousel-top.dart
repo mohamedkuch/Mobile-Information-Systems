@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:unboxingtn/Posts.dart';
 import 'package:unboxingtn/single-post.dart';
+import 'package:unboxingtn/transition/PageRouteTransition.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -69,8 +70,10 @@ List<Widget> imageSliders(posts, context) {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => SinglePost(posts[imgList.indexOf(item)]),
+              PageRouteTransition(
+                widget: SinglePost(
+                  posts[imgList.indexOf(item)],
+                ),
               ),
             );
 

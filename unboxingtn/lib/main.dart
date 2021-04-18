@@ -92,15 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _isMoreLoading = true;
       _currentPage += 1;
-      print(_currentPage);
     });
 
     Services.getPosts(_currentPage).then((data) {
       setState(() {
         _posts += data['posts'];
         _isMoreLoading = false;
-        print(_posts.length);
-        print(_pageCount);
       });
     });
   }
