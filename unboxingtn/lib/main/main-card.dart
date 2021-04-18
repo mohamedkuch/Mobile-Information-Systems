@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:html/dom.dart' as htmlParser;
 import 'package:unboxingtn/Posts.dart';
 import 'package:unboxingtn/single-post.dart';
 
@@ -84,10 +83,7 @@ class MainCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  htmlParser.DocumentFragment.html(
-                                          posts[index].excerpt.rendered)
-                                      .text,
-                                  // snapshot.data[index]["excerpt"]["rendered"],
+                                  posts[index].excerpt.rendered,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 3,
                                   style: TextStyle(
