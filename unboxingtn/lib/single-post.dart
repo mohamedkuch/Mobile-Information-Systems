@@ -4,6 +4,7 @@ import 'package:flutter_html/image_render.dart';
 import 'package:flutter_html/style.dart';
 import 'package:unboxingtn/Posts.dart';
 import 'colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SinglePost extends StatefulWidget {
   final Post post;
@@ -91,7 +92,12 @@ Widget _buttonHelper(List<List<EmbeddedWpTerm>> catList, bool isPrimary) {
 // title section
 Widget titleSection(Post post) {
   return Container(
-    padding: const EdgeInsets.all(20),
+    padding: const EdgeInsets.only(
+      top: 20,
+      bottom: 20,
+      left: 15,
+      right: 15,
+    ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -115,6 +121,10 @@ Widget titleSection(Post post) {
   );
 }
 
+void _launchURL(customUrl) async => await canLaunch(customUrl)
+    ? await launch(customUrl)
+    : throw 'Could not launch $customUrl';
+
 class _SinglePostState extends State<SinglePost> {
   @override
   Widget build(BuildContext context) {
@@ -129,7 +139,7 @@ class _SinglePostState extends State<SinglePost> {
         child: SafeArea(
           child: ListView(children: <Widget>[
             FadeInImage(
-              placeholder: AssetImage('assets/img_placeholder.jpg'),
+              placeholder: AssetImage('assets/img_placeholder.png'),
               fit: BoxFit.fitWidth,
               image: NetworkImage(
                   widget.post.embedded.wpFeaturedmedia[0].sourceUrl),
@@ -163,6 +173,11 @@ class _SinglePostState extends State<SinglePost> {
                       fontWeight: FontWeight.bold,
                       color: Color.fromRGBO(207, 46, 46, 1),
                     ),
+                    "a": Style(textDecoration: TextDecoration.none),
+                  },
+                  onLinkTap: (String url) {
+                    //open URL in webview, or launch URL in browser, or any other logic here
+                    _launchURL(url);
                   },
                   customImageRenders: {
                     networkSourceMatcher(domains: ["www.unboxingtn.com"]):
@@ -186,15 +201,6 @@ class _SinglePostState extends State<SinglePost> {
             // textSection,
           ]),
         ),
-
-        // Center(
-        //   child: ElevatedButton(
-        //     onPressed: () {
-        //       Navigator.pop(context);
-        //     },
-        //     child: Text('Go back!'),
-        //   ),
-        // ),
       ),
       bottomNavigationBar: bottomNavigation(),
     );
