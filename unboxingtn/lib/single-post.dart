@@ -42,8 +42,23 @@ Widget bottomNavigation() {
   );
 }
 
-Widget _buttonHelper() {
+Widget _buttonHelper(List<List<EmbeddedWpTerm>> catList, bool isPrimary) {
+  String catListString = "";
+  for (var item in catList) {
+    for (var single in item) {
+      print(single.name);
+      catListString += single.name + " , ";
+    }
+  }
+
+  if (catListString == "") {
+    catListString = "None";
+  } else {
+    catListString = catListString.substring(0, catListString.length - 2);
+  }
+
   return Container(
+    margin: isPrimary ? EdgeInsets.only(right: 0) : EdgeInsets.only(right: 8),
     padding: EdgeInsets.only(
       top: 5,
       bottom: 5,
@@ -51,14 +66,24 @@ Widget _buttonHelper() {
       right: 8,
     ),
     decoration: BoxDecoration(
-      color: primary_Color,
+      color: isPrimary ? primary_Color : Colors.grey[600],
       borderRadius: BorderRadius.circular(10),
     ),
-    child: Text(
-      "aaa",
-      style: TextStyle(
-        color: Colors.white,
-      ),
+    child: Row(
+      children: [
+        Icon(
+          Icons.folder,
+          color: Colors.white,
+          size: 15,
+        ),
+        Container(
+          margin: EdgeInsets.only(right: 4),
+          child: Text(
+            catListString,
+            style: TextStyle(color: Colors.white, fontSize: 12),
+          ),
+        ),
+      ],
     ),
   );
 }
@@ -80,8 +105,8 @@ Widget titleSection(Post post) {
           margin: EdgeInsets.only(top: 10),
           child: Row(
             children: [
-              _buttonHelper(),
-              _buttonHelper(),
+              _buttonHelper(post.embedded.wpTerm, true),
+              //_buttonHelper("cat", false),
             ],
           ),
         )
