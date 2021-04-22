@@ -48,20 +48,7 @@ Widget bottomNavigation(context) {
   );
 }
 
-Widget _buttonHelper(List<List<EmbeddedWpTerm>> catList, bool isPrimary) {
-  String catListString = "";
-  for (var item in catList) {
-    for (var single in item) {
-      catListString += single.name + " , ";
-    }
-  }
-
-  if (catListString == "") {
-    catListString = "None";
-  } else {
-    catListString = catListString.substring(0, catListString.length - 2);
-  }
-
+Widget _buttonHelper(String catListString, bool isPrimary) {
   return Container(
     margin: isPrimary ? EdgeInsets.only(right: 0) : EdgeInsets.only(right: 8),
     padding: EdgeInsets.only(
@@ -76,13 +63,19 @@ Widget _buttonHelper(List<List<EmbeddedWpTerm>> catList, bool isPrimary) {
     ),
     child: Row(
       children: [
-        Icon(
-          Icons.folder,
-          color: Colors.white,
-          size: 15,
-        ),
+        isPrimary
+            ? Icon(
+                Icons.folder,
+                color: Colors.white,
+                size: 15,
+              )
+            : Icon(
+                Icons.access_time_outlined,
+                color: Colors.white,
+                size: 15,
+              ),
         Container(
-          margin: EdgeInsets.only(right: 4),
+          margin: EdgeInsets.only(right: 5),
           child: Text(
             catListString,
             style: TextStyle(color: Colors.white, fontSize: 12),
@@ -95,6 +88,21 @@ Widget _buttonHelper(List<List<EmbeddedWpTerm>> catList, bool isPrimary) {
 
 // title section
 Widget titleSection(Post post) {
+  String catListString = "";
+  for (var item in post.embedded.wpTerm) {
+    for (var single in item) {
+      catListString += single.name + " , ";
+    }
+  }
+
+  if (catListString == "") {
+    catListString = "None";
+  } else {
+    catListString = catListString.substring(0, catListString.length - 2);
+  }
+
+  var dateFormatted = "${post.date.year}-${post.date.month}-${post.date.day}";
+
   return Container(
     padding: const EdgeInsets.only(
       top: 20,
@@ -108,6 +116,8 @@ Widget titleSection(Post post) {
         Text(
           post.title.rendered,
           style: TextStyle(
+            fontFamily: 'MarkaziText',
+            fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -115,8 +125,8 @@ Widget titleSection(Post post) {
           margin: EdgeInsets.only(top: 10),
           child: Row(
             children: [
-              _buttonHelper(post.embedded.wpTerm, true),
-              //_buttonHelper("cat", false),
+              _buttonHelper(catListString, true),
+              _buttonHelper(dateFormatted, false),
             ],
           ),
         )
@@ -172,6 +182,8 @@ class _SinglePostState extends State<SinglePost> {
                   style: {
                     "strong": Style(
                       fontWeight: FontWeight.normal,
+                      fontFamily: 'MarkaziText',
+                      fontSize: FontSize(18),
                     ),
                     ".has-vivid-red-color": Style(
                       fontWeight: FontWeight.bold,
