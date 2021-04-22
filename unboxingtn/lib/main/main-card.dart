@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:unboxingtn/Posts.dart';
 import 'package:unboxingtn/single-post.dart';
 import 'package:unboxingtn/transition/PageRouteTransition.dart';
@@ -80,16 +82,20 @@ class MainCard extends StatelessWidget {
                                     thickness: 1,
                                   ),
                                 ),
-                                Text(
-                                  posts[index].excerpt.rendered,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                    fontFamily: 'MarkaziText',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                    color: Colors.grey[600],
-                                  ),
+                                new Html(
+                                  data: posts[index]
+                                          .excerpt
+                                          .rendered
+                                          .substring(0, 110) +
+                                      "...",
+                                  style: {
+                                    "p": Style(
+                                      fontFamily: 'MarkaziText',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: FontSize(12),
+                                      color: Colors.grey[600],
+                                    ),
+                                  },
                                 ),
                               ],
                             ),

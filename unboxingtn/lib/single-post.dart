@@ -14,7 +14,7 @@ class SinglePost extends StatefulWidget {
   _SinglePostState createState() => _SinglePostState();
 }
 
-Widget bottomNavigation() {
+Widget bottomNavigation(context) {
   return Container(
     decoration: BoxDecoration(
       boxShadow: <BoxShadow>[
@@ -39,6 +39,11 @@ Widget bottomNavigation() {
           label: 'Settings',
         ),
       ],
+      onTap: (int index) {
+        if (index == 0) {
+          Navigator.pop(context);
+        }
+      },
     ),
   );
 }
@@ -47,7 +52,6 @@ Widget _buttonHelper(List<List<EmbeddedWpTerm>> catList, bool isPrimary) {
   String catListString = "";
   for (var item in catList) {
     for (var single in item) {
-      print(single.name);
       catListString += single.name + " , ";
     }
   }
@@ -196,13 +200,10 @@ class _SinglePostState extends State<SinglePost> {
                 ),
               ),
             ),
-
-            // buttonSection,
-            // textSection,
           ]),
         ),
       ),
-      bottomNavigationBar: bottomNavigation(),
+      bottomNavigationBar: bottomNavigation(context),
     );
   }
 }
