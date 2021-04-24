@@ -106,7 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void searchStringFunction(value) {
     setState(() {
       searchString = value;
-      print(searchString);
     });
   }
 
@@ -171,13 +170,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
+          Padding(padding: EdgeInsets.all(2)),
           Divider(
-            height: 5,
-            thickness: 2,
+            height: 3,
+            thickness: 1,
             indent: 15,
             endIndent: 15,
           ),
-          Padding(padding: EdgeInsets.all(5))
+          Padding(padding: EdgeInsets.all(2))
         ],
       ),
     );

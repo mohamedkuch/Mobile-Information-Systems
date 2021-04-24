@@ -65,6 +65,7 @@ class MainCard extends StatelessWidget {
                                   ),
                                   child: Text(
                                     posts[index].title.rendered,
+                                    maxLines: 2,
                                     style: TextStyle(
                                       fontFamily: 'MarkaziText',
                                       fontWeight: FontWeight.bold,
@@ -75,7 +76,6 @@ class MainCard extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.only(
                                     top: 5,
-                                    bottom: 5,
                                   ),
                                   child: Divider(
                                     height: 3,
