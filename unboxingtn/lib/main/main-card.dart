@@ -66,6 +66,7 @@ class MainCard extends StatelessWidget {
                                   child: Text(
                                     posts[index].title.rendered,
                                     maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontFamily: 'MarkaziText',
                                       fontWeight: FontWeight.bold,
