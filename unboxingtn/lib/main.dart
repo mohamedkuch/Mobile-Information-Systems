@@ -74,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isMoreLoading = false;
   int _currentPage = 1;
   int _pageCount = 0;
+  String searchString = "";
 
   @override
   void initState() {
@@ -99,6 +100,13 @@ class _MyHomePageState extends State<MyHomePage> {
         _posts += data['posts'];
         _isMoreLoading = false;
       });
+    });
+  }
+
+  void searchStringFunction(value) {
+    setState(() {
+      searchString = value;
+      print(searchString);
     });
   }
 
@@ -147,6 +155,34 @@ class _MyHomePageState extends State<MyHomePage> {
           );
   }
 
+  Widget searchTop() {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
+            child: Text(
+              "نتائج البحث عن : $searchString",
+              style: TextStyle(
+                fontFamily: 'MarkaziText',
+                fontSize: 20.0,
+              ),
+            ),
+          ),
+          Divider(
+            height: 5,
+            thickness: 2,
+            indent: 15,
+            endIndent: 15,
+          ),
+          Padding(padding: EdgeInsets.all(5))
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,8 +207,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       indent: 15,
                       endIndent: 15,
                     ),
-                    SearchBar(),
-                    CarouselWithIndicatorDemo(_posts.sublist(0, 5)),
+                    SearchBar(
+                      posts: _posts,
+                      searchFunction: searchStringFunction,
+                    ),
+                    searchString != ""
+                        ? searchTop()
+                        : CarouselWithIndicatorDemo(_posts.sublist(0, 5)),
                     MainCard(_posts),
                     loadMoreButton(),
                   ],
