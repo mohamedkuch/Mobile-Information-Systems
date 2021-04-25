@@ -70,11 +70,16 @@ Widget bottomNavigation() {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Post> _posts;
+
+  List<Post> _searchPosts;
+
   bool _isLoading;
   bool _isMoreLoading = false;
   int _currentPage = 1;
   int _pageCount = 0;
+
   String searchString = "";
+  bool _searchLoading;
 
   @override
   void initState() {
@@ -106,52 +111,78 @@ class _MyHomePageState extends State<MyHomePage> {
   void searchStringFunction(value) {
     setState(() {
       searchString = value;
+      _searchLoading = true;
+    });
+    //print(searchString);
+    Services.getSearchPosts(1, searchString).then((data) {
+      setState(() {
+        _searchPosts = data['posts'];
+        _searchLoading = false;
+      });
     });
   }
 
-  Widget loadMoreButton() {
-    if (_currentPage > _pageCount && !_isMoreLoading) {
-      return Padding(
-        padding: EdgeInsets.only(
-          bottom: 10,
-        ),
+  Widget mainContainer() {
+    if (searchString == "") {
+      return MainCard(_posts);
+    }
+    if (_searchLoading) {
+      return Container(
+        height: MediaQuery.of(context).size.height * 0.5,
         child: Center(
-          child: Text("No more articles left"),
+          child: CircularProgressIndicator(),
         ),
       );
     }
-    return _isMoreLoading
-        ? Padding(
-            padding: EdgeInsets.only(top: 10, bottom: 20),
-            child: Center(
-              child: Container(
-                height: 25,
-                width: 25,
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          )
-        : Padding(
-            padding: EdgeInsets.only(
-              left: 15,
-              right: 15,
-              bottom: 10,
-            ),
-            child: ElevatedButton.icon(
-              label: Text(
-                'Load More',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
+    return MainCard(_searchPosts);
+  }
+
+  Widget loadMoreButton() {
+    if (searchString == "") {
+      if (_currentPage > _pageCount && !_isMoreLoading) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: 10,
+          ),
+          child: Center(
+            child: Text("No more articles left"),
+          ),
+        );
+      }
+      return _isMoreLoading
+          ? Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 20),
+              child: Center(
+                child: Container(
+                  height: 25,
+                  width: 25,
+                  child: CircularProgressIndicator(),
                 ),
               ),
-              icon: Icon(Icons.add_circle_outline_rounded),
-              onPressed: () {
-                print('Pressed');
-                requestMorePost();
-              },
-            ),
-          );
+            )
+          : Padding(
+              padding: EdgeInsets.only(
+                left: 15,
+                right: 15,
+                bottom: 10,
+              ),
+              child: ElevatedButton.icon(
+                label: Text(
+                  'Load More',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                icon: Icon(Icons.add_circle_outline_rounded),
+                onPressed: () {
+                  print('Pressed');
+                  requestMorePost();
+                },
+              ),
+            );
+    }
+    return Padding(padding: EdgeInsets.all(2));
   }
 
   Widget searchTop() {
@@ -214,7 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     searchString != ""
                         ? searchTop()
                         : CarouselWithIndicatorDemo(_posts.sublist(0, 5)),
-                    MainCard(_posts),
+                    mainContainer(),
                     loadMoreButton(),
                   ],
                 ),

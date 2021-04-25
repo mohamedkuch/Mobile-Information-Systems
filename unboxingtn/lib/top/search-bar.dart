@@ -53,8 +53,13 @@ class _SearchBarState extends State<SearchBar> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: TextField(
-              onChanged: (text) {
+              onSubmitted: (text) {
                 widget.searchFunction(text);
+              },
+              onChanged: (text) {
+                if (text == "") {
+                  widget.searchFunction(text);
+                }
               },
               controller: _textEditingController,
               decoration: InputDecoration(
