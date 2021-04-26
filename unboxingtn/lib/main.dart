@@ -200,12 +200,47 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Container(
             padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
-            child: Text(
-              "نتائج البحث عن : $searchString",
-              style: TextStyle(
-                fontFamily: 'MarkaziText',
-                fontSize: 20.0,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: Text(
+                    "نتائج البحث عن : $searchString",
+                    style: TextStyle(
+                      fontFamily: 'MarkaziText',
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+                Container(
+                    padding: EdgeInsets.only(
+                      left: 10,
+                      right: 5,
+                      top: 2,
+                      bottom: 2,
+                    ),
+                    decoration: BoxDecoration(
+                        color: primary_Color,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.clear,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                        Padding(padding: EdgeInsets.only(left: 2)),
+                        Text(
+                          "clear",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'MarkaziText',
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ],
+                    ))
+              ],
             ),
           ),
           Padding(padding: EdgeInsets.all(2)),
