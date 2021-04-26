@@ -39,35 +39,6 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-Widget bottomNavigation() {
-  return Container(
-    decoration: BoxDecoration(
-      boxShadow: <BoxShadow>[
-        BoxShadow(
-          color: Colors.black26,
-          blurRadius: 2,
-        ),
-      ],
-    ),
-    child: BottomNavigationBar(
-      elevation: 2,
-      currentIndex: 0,
-      selectedItemColor: primary_Color[800],
-      backgroundColor: Colors.white,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Settings',
-        ),
-      ],
-    ),
-  );
-}
-
 class _MyHomePageState extends State<MyHomePage> {
   List<Post> _posts;
 
@@ -80,6 +51,42 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String searchString = "";
   bool _searchLoading;
+
+  Widget bottomNavigation() {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 2,
+          ),
+        ],
+      ),
+      child: BottomNavigationBar(
+        elevation: 2,
+        currentIndex: 0,
+        selectedItemColor: primary_Color[800],
+        backgroundColor: Colors.white,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+        onTap: (int index) {
+          if (index == 0) {
+            setState(() {
+              searchString = "";
+            });
+          }
+        },
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -112,8 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       searchString = value;
       _searchLoading = true;
+      _searchPosts = [];
     });
-    //print(searchString);
     Services.getSearchPosts(1, searchString).then((data) {
       setState(() {
         _searchPosts = data['posts'];
