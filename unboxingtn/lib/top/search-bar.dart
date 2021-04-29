@@ -41,6 +41,11 @@ class _SearchBarState extends State<SearchBar> {
         _showClearButton = _textEditingController.text.length > 0;
       });
     });
+    if (widget.searchString.length > 0) {
+      setState(() {
+        _showClearButton = true;
+      });
+    }
   }
 
   @override
