@@ -212,34 +212,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
-                Container(
-                    padding: EdgeInsets.only(
-                      left: 10,
-                      right: 5,
-                      top: 2,
-                      bottom: 2,
-                    ),
-                    decoration: BoxDecoration(
-                        color: primary_Color,
-                        borderRadius: BorderRadius.circular(6)),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.clear,
-                          color: Colors.white,
-                          size: 16,
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 2)),
-                        Text(
-                          "clear",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'MarkaziText',
-                            fontSize: 18.0,
-                          ),
-                        ),
-                      ],
-                    ))
               ],
             ),
           ),
@@ -281,8 +253,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       endIndent: 15,
                     ),
                     SearchBar(
-                      posts: _posts,
                       searchFunction: searchStringFunction,
+                      searchString: searchString,
                     ),
                     searchString != ""
                         ? searchTop()

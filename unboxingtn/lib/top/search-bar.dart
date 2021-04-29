@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:unboxingtn/Posts.dart';
 import 'package:unboxingtn/colors.dart';
 
 class SearchBar extends StatefulWidget {
-  final List<Post> posts;
   final searchFunction;
-  SearchBar({Key key, this.posts, this.searchFunction}) : super(key: key);
+  final String searchString;
+  SearchBar({Key key, this.searchFunction, this.searchString})
+      : super(key: key);
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -13,7 +13,7 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   bool _showClearButton = false;
-  final TextEditingController _textEditingController = TextEditingController();
+  TextEditingController _textEditingController = TextEditingController();
 
   Widget _getClearButton() {
     if (!_showClearButton) {
@@ -33,6 +33,8 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   void initState() {
+    _textEditingController = TextEditingController(text: widget.searchString);
+
     super.initState();
     _textEditingController.addListener(() {
       setState(() {
