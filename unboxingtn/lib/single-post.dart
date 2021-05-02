@@ -14,40 +14,6 @@ class SinglePost extends StatefulWidget {
   _SinglePostState createState() => _SinglePostState();
 }
 
-Widget bottomNavigation(context) {
-  return Container(
-    decoration: BoxDecoration(
-      boxShadow: <BoxShadow>[
-        BoxShadow(
-          color: Colors.black26,
-          blurRadius: 2,
-        ),
-      ],
-    ),
-    child: BottomNavigationBar(
-      elevation: 2,
-      currentIndex: 1,
-      selectedItemColor: Colors.grey[600],
-      backgroundColor: Colors.white,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Settings',
-        ),
-      ],
-      onTap: (int index) {
-        if (index == 0) {
-          Navigator.pop(context);
-        }
-      },
-    ),
-  );
-}
-
 Widget _buttonHelper(String catListString, bool isPrimary) {
   return Container(
     margin: isPrimary ? EdgeInsets.only(right: 0) : EdgeInsets.only(right: 8),
@@ -215,7 +181,6 @@ class _SinglePostState extends State<SinglePost> {
           ]),
         ),
       ),
-      //bottomNavigationBar: bottomNavigation(context),
     );
   }
 }

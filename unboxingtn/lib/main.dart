@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unboxingtn/home.dart';
 import 'package:unboxingtn/colors.dart';
-import 'package:unboxingtn/login.dart';
 
 void main() {
   runApp(MyApp());
