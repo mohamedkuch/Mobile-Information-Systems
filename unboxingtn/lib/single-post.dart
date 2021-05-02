@@ -215,7 +215,7 @@ class _SinglePostState extends State<SinglePost> {
           ]),
         ),
       ),
-      bottomNavigationBar: bottomNavigation(context),
+      //bottomNavigationBar: bottomNavigation(context),
     );
   }
 }

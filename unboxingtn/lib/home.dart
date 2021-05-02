@@ -31,70 +31,72 @@ class _HomeState extends State<Home> {
 
   String searchString = "";
   bool _searchLoading;
+  int _currentPageSearch = 1;
+  int _pageCountSearch = 0;
 
   String skipLogin = "";
 
-  Widget bottomNavigation() {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 2,
-          ),
-        ],
-      ),
-      child: BottomNavigationBar(
-        elevation: 2,
-        currentIndex: 0,
-        selectedItemColor: primary_Color[800],
-        backgroundColor: Colors.white,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        onTap: (int index) {
-          if (index == 0) {
-            setState(() {
-              searchString = "";
-            });
-          }
-        },
-      ),
-    );
-  }
+  // Widget bottomNavigation() {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       boxShadow: <BoxShadow>[
+  //         BoxShadow(
+  //           color: Colors.black26,
+  //           blurRadius: 2,
+  //         ),
+  //       ],
+  //     ),
+  //     child: BottomNavigationBar(
+  //       elevation: 2,
+  //       currentIndex: 0,
+  //       selectedItemColor: primary_Color[800],
+  //       backgroundColor: Colors.white,
+  //       items: [
+  //         BottomNavigationBarItem(
+  //           icon: Icon(Icons.home),
+  //           label: 'Home',
+  //         ),
+  //         BottomNavigationBarItem(
+  //           icon: Icon(Icons.settings),
+  //           label: 'Settings',
+  //         ),
+  //       ],
+  //       onTap: (int index) {
+  //         if (index == 0) {
+  //           setState(() {
+  //             searchString = "";
+  //           });
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
 
-  Future getValidationData() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-
-    var skipLoginTmp = sharedPreferences.getString("skipLogin");
-    setState(() {
-      skipLogin = skipLoginTmp;
-    });
-    print(skipLogin);
-  }
+  // Future getValidationData() async {
+  //   final SharedPreferences sharedPreferences =
+  //       await SharedPreferences.getInstance();
+  //   var skipLoginTmp = sharedPreferences.getString("skipLogin");
+  //   setState(() {
+  //     skipLogin = skipLoginTmp;
+  //   });
+  //   print(skipLogin);
+  // }
 
   @override
   void initState() {
-    getValidationData().whenComplete(() async {
-      if (skipLogin == null || skipLogin == "") {
-        Timer(Duration(milliseconds: 10), () {
-          Navigator.push(
-            context,
-            PageRouteTransition(
-              widget: Login(),
-            ),
-          );
-        });
-      }
-    });
+    // Login Page
+    // getValidationData().whenComplete(() async {
+    //   if (skipLogin == null || skipLogin == "") {
+    //     Timer(Duration(milliseconds: 10), () {
+    //       Navigator.push(
+    //         context,
+    //         PageRouteTransition(
+    //           widget: Login(),
+    //         ),
+    //       );
+    //     });
+    //   }
+    // });
 
     _isLoading = true;
     Services.getPosts(_currentPage).then((data) {
@@ -130,6 +132,7 @@ class _HomeState extends State<Home> {
     Services.getSearchPosts(1, searchString).then((data) {
       setState(() {
         _searchPosts = data['posts'];
+        _pageCountSearch = data['count'];
         _searchLoading = false;
       });
     });
@@ -272,7 +275,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-      bottomNavigationBar: bottomNavigation(),
+      //bottomNavigationBar: bottomNavigation(),
     );
   }
 }
