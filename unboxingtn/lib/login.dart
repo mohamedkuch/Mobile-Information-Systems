@@ -17,7 +17,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primary_Color,
+      backgroundColor: white_color,
       body: Column(
         children: [
           Container(
@@ -26,8 +26,15 @@ class _LoginState extends State<Login> {
             //   bottom: MediaQuery.of(context).size.height * 0.1,
             // ),
             decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black54,
+                  blurRadius: 2,
+                ),
+              ],
               borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(50),
+                bottomRight: Radius.circular(30),
+                bottomLeft: Radius.circular(30),
               ),
               color: Colors.white,
             ),
@@ -54,24 +61,21 @@ class _LoginState extends State<Login> {
                           color: Colors.black87,
                           width: 1,
                         ),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(12),
-                          topLeft: Radius.circular(12),
-                        ),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.black38,
+                          color: Colors.black54,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(12),
-                          topLeft: Radius.circular(12),
-                        ),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Email or Username',
                       hintStyle: TextStyle(fontSize: 15),
                     ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5),
                   ),
                   TextField(
                     decoration: InputDecoration(
@@ -83,33 +87,47 @@ class _LoginState extends State<Login> {
                           color: Colors.black87,
                           width: 1,
                         ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(12),
-                          bottomRight: Radius.circular(12),
-                        ),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.black38,
+                          color: Colors.black54,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(12),
-                          bottomRight: Radius.circular(12),
-                        ),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Password',
                       hintStyle: TextStyle(fontSize: 15),
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(bottom: 30, top: 50),
+                    padding: EdgeInsets.only(top: 60),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an account yet ? ",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
+                          "Register",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: primary_Color,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(bottom: 30, top: 20),
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(25)),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: white_color,
-                        onPrimary: Colors.black,
                         minimumSize: Size(double.infinity, 50),
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(12.0),
@@ -137,11 +155,12 @@ class _LoginState extends State<Login> {
                       );
                     },
                     child: Container(
+                      padding: EdgeInsets.all(15),
                       child: Text(
                         "skip this step >>",
                         style: TextStyle(
                           decoration: TextDecoration.underline,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 16,
                         ),
                       ),
